@@ -492,7 +492,8 @@ class ClassicalFooterWidgetState extends State<ClassicalFooterWidget>
                   right: 10.0,
                 ),
                 child: (widget.loadState == LoadMode.load ||
-                        widget.loadState == LoadMode.armed) && !widget.noMore
+                            widget.loadState == LoadMode.armed) &&
+                        !widget.noMore
                     ? Container(
                         width: 20.0,
                         height: 20.0,

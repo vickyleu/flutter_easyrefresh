@@ -406,7 +406,7 @@ class EasyRefreshSliverLoadControl extends StatefulWidget {
   ///
   /// The [onLoad] argument will be called when pulled far enough to trigger
   /// a refresh.
-  const EasyRefreshSliverLoadControl({
+  EasyRefreshSliverLoadControl({
     Key key,
     this.loadTriggerPullDistance = _defaultLoadTriggerPullDistance,
     this.loadIndicatorExtent = _defaultLoadIndicatorExtent,
@@ -473,7 +473,7 @@ class EasyRefreshSliverLoadControl extends StatefulWidget {
   /// Can be null, in which case a single frame of [LoadMode.armed]
   /// state will be drawn before going immediately to the [LoadMode.done]
   /// where the sliver will start retracting.
-  final OnLoadCallback onLoad;
+  OnLoadCallback onLoad;
 
   /// 完成延时
   final Duration completeDuration;
@@ -715,8 +715,7 @@ class _EasyRefreshSliverLoadControlState
           return LoadMode.drag;
         } else {
           // 提前固定高度，防止列表回弹
-          SchedulerBinding.instance
-              .addPostFrameCallback((Duration timestamp) {
+          SchedulerBinding.instance.addPostFrameCallback((Duration timestamp) {
             setState(() => hasSliverLayoutExtent = true);
           });
           if (widget.onLoad != null && !hasTask) {
@@ -730,17 +729,16 @@ class _EasyRefreshSliverLoadControlState
               // 触发加载任务
               SchedulerBinding.instance
                   .addPostFrameCallback((Duration timestamp) {
-                loadTask = widget.onLoad()
-                  ..then((_) {
-                    if (mounted && !widget.enableControlFinishLoad) {
-                      if (widget.enableInfiniteLoad) {
-                        loadState = LoadMode.inactive;
-                      }
-                      setState(() => loadTask = null);
-                      if (!widget.enableInfiniteLoad)
-                        loadState = transitionNextState();
+                loadTask = widget.onLoad()?.then((_) {
+                  if (mounted && !widget.enableControlFinishLoad) {
+                    if (widget.enableInfiniteLoad) {
+                      loadState = LoadMode.inactive;
                     }
-                  });
+                    setState(() => loadTask = null);
+                    if (!widget.enableInfiniteLoad)
+                      loadState = transitionNextState();
+                  }
+                });
               });
               return LoadMode.armed;
             }

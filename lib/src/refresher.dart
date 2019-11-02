@@ -134,7 +134,7 @@ class EasyRefresh extends StatefulWidget {
         this.slivers = null,
         this.semanticChildCount = null,
         this.dragStartBehavior = null,
-  super(key:key);
+        super(key: key);
 
   /// custom构造器(推荐)
   /// 直接使用CustomScrollView可用的slivers
@@ -167,7 +167,7 @@ class EasyRefresh extends StatefulWidget {
     @required this.slivers,
   })  : this.builder = null,
         this.child = null,
-        super(key:key);
+        super(key: key);
 
   /// 自定义构造器
   /// 用法灵活,但需将physics、header和footer放入列表中
@@ -199,7 +199,8 @@ class EasyRefresh extends StatefulWidget {
         this.dragStartBehavior = null,
         this.headerIndex = null,
         this.firstRefreshWidget = null,
-        this.emptyWidget = null,super(key:key);
+        this.emptyWidget = null,
+        super(key: key);
 
   @override
   _EasyRefreshState createState() {
