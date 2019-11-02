@@ -20,10 +20,10 @@ class EasyRefresh extends StatefulWidget {
   final EasyRefreshController controller;
 
   /// 刷新回调(null为不开启刷新)
-  final OnRefreshCallback onRefresh;
+  OnRefreshCallback onRefresh;
 
   /// 加载回调(null为不开启加载)
-  final OnLoadCallback onLoad;
+  OnLoadCallback onLoad;
 
   /// 是否开启控制结束刷新
   final bool enableControlFinishRefresh;
@@ -84,6 +84,7 @@ class EasyRefresh extends StatefulWidget {
 
   /// 全局默认Header
   static Header _defaultHeader = ClassicalHeader();
+
   static set defaultHeader(Header header) {
     if (header != null) {
       _defaultHeader = header;
@@ -92,6 +93,7 @@ class EasyRefresh extends StatefulWidget {
 
   /// 全局默认Footer
   static Footer _defaultFooter = ClassicalFooter();
+
   static set defaultFooter(Footer footer) {
     if (footer != null) {
       _defaultFooter = footer;
@@ -206,6 +208,7 @@ class EasyRefresh extends StatefulWidget {
 class _EasyRefreshState extends State<EasyRefresh> {
   // Physics
   EasyRefreshPhysics _physics;
+
   // Header
   Header get _header {
     if (_enableFirstRefresh && widget.firstRefreshWidget != null)
@@ -215,8 +218,10 @@ class _EasyRefreshState extends State<EasyRefresh> {
 
   // 是否开启首次刷新
   bool _enableFirstRefresh = false;
+
   // 首次刷新组件
   Header _firstRefreshHeader;
+
   // Footer
   Footer get _footer {
     return widget.footer ?? EasyRefresh._defaultFooter;
@@ -234,10 +239,13 @@ class _EasyRefreshState extends State<EasyRefresh> {
 
   // 滚动焦点状态
   ValueNotifier<bool> _focusNotifier;
+
   // 任务状态
   ValueNotifier<bool> _taskNotifier;
+
   // 触发刷新状态
   ValueNotifier<bool> _callRefreshNotifier;
+
   // 触发加载状态
   ValueNotifier<bool> _callLoadNotifier;
 
@@ -532,6 +540,7 @@ class EasyRefreshController {
 
   /// 完成刷新
   FinishRefresh finishRefreshCallBack;
+
   void finishRefresh({
     bool success,
     bool noMore,
@@ -543,6 +552,7 @@ class EasyRefreshController {
 
   /// 完成加载
   FinishLoad finishLoadCallBack;
+
   void finishLoad({
     bool success,
     bool noMore,
@@ -554,6 +564,7 @@ class EasyRefreshController {
 
   /// 恢复刷新状态(用于没有更多后)
   VoidCallback resetRefreshStateCallBack;
+
   void resetRefreshState() {
     if (resetRefreshStateCallBack != null) {
       resetRefreshStateCallBack();
@@ -562,6 +573,7 @@ class EasyRefreshController {
 
   /// 恢复加载状态(用于没有更多后)
   VoidCallback resetLoadStateCallBack;
+
   void resetLoadState() {
     if (resetLoadStateCallBack != null) {
       resetLoadStateCallBack();
