@@ -649,7 +649,7 @@ class _EasyRefreshSliverRefreshControlState
       SchedulerBinding.instance.addPostFrameCallback((Duration timestamp) {
         refreshState = RefreshMode.refresh;
         refreshTask = widget.onRefresh()
-          ..then((_) {
+          ?.then((_) {
             if (mounted && !widget.enableControlFinishRefresh) {
               refreshState = RefreshMode.refresh;
               setState(() => refreshTask = null);
@@ -744,8 +744,7 @@ class _EasyRefreshSliverRefreshControlState
           return RefreshMode.drag;
         } else {
           // 提前固定高度，防止列表回弹
-          SchedulerBinding.instance
-              .addPostFrameCallback((Duration timestamp) {
+          SchedulerBinding.instance.addPostFrameCallback((Duration timestamp) {
             if (!hasSliverLayoutExtent) {
               setState(() => hasSliverLayoutExtent = true);
             }
@@ -761,17 +760,16 @@ class _EasyRefreshSliverRefreshControlState
               // 触发刷新任务
               SchedulerBinding.instance
                   .addPostFrameCallback((Duration timestamp) {
-                refreshTask = widget.onRefresh()
-                  ..then((_) {
-                    if (mounted && !widget.enableControlFinishRefresh) {
-                      if (widget.enableInfiniteRefresh) {
-                        refreshState = RefreshMode.inactive;
-                      }
-                      setState(() => refreshTask = null);
-                      if (!widget.enableInfiniteRefresh)
-                        refreshState = transitionNextState();
+                refreshTask = widget.onRefresh()?.then((_) {
+                  if (mounted && !widget.enableControlFinishRefresh) {
+                    if (widget.enableInfiniteRefresh) {
+                      refreshState = RefreshMode.inactive;
                     }
-                  });
+                    setState(() => refreshTask = null);
+                    if (!widget.enableInfiniteRefresh)
+                      refreshState = transitionNextState();
+                  }
+                });
               });
               return RefreshMode.armed;
             }

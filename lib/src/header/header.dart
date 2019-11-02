@@ -481,14 +481,15 @@ class ClassicalHeaderWidgetState extends State<ClassicalHeaderWidget>
     // 准备动画
     _readyController = new AnimationController(
         duration: const Duration(milliseconds: 200), vsync: this);
-    _readyAnimation = new Tween(begin: 0.5, end: 1.0).animate(_readyController)
-      ..addListener(() {
-        setState(() {
-          if (_readyAnimation.status != AnimationStatus.dismissed) {
-            _iconRotationValue = _readyAnimation.value;
-          }
-        });
+    _readyAnimation = new Tween(begin: 0.5, end: 1.0)
+        .animate(_readyController)
+        ?.addListener(() {
+      setState(() {
+        if (_readyAnimation.status != AnimationStatus.dismissed) {
+          _iconRotationValue = _readyAnimation.value;
+        }
       });
+    });
     _readyAnimation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _readyController.reset();
@@ -497,15 +498,15 @@ class ClassicalHeaderWidgetState extends State<ClassicalHeaderWidget>
     // 恢复动画
     _restoreController = new AnimationController(
         duration: const Duration(milliseconds: 200), vsync: this);
-    _restoreAnimation =
-        new Tween(begin: 1.0, end: 0.5).animate(_restoreController)
-          ..addListener(() {
-            setState(() {
-              if (_restoreAnimation.status != AnimationStatus.dismissed) {
-                _iconRotationValue = _restoreAnimation.value;
-              }
-            });
-          });
+    _restoreAnimation = new Tween(begin: 1.0, end: 0.5)
+        .animate(_restoreController)
+        ?.addListener(() {
+      setState(() {
+        if (_restoreAnimation.status != AnimationStatus.dismissed) {
+          _iconRotationValue = _restoreAnimation.value;
+        }
+      });
+    });
     _restoreAnimation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _restoreController.reset();
@@ -517,13 +518,13 @@ class ClassicalHeaderWidgetState extends State<ClassicalHeaderWidget>
     _floatBackAnimation =
         new Tween(begin: widget.refreshIndicatorExtent, end: 0.0)
             .animate(_floatBackController)
-              ..addListener(() {
-                setState(() {
-                  if (_floatBackAnimation.status != AnimationStatus.dismissed) {
-                    _floatBackDistance = _floatBackAnimation.value;
-                  }
-                });
-              });
+            ?.addListener(() {
+      setState(() {
+        if (_floatBackAnimation.status != AnimationStatus.dismissed) {
+          _floatBackDistance = _floatBackAnimation.value;
+        }
+      });
+    });
     _floatBackAnimation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _floatBackController.reset();

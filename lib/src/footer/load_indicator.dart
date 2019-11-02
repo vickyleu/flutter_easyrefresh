@@ -625,7 +625,7 @@ class _EasyRefreshSliverLoadControlState
       SchedulerBinding.instance.addPostFrameCallback((Duration timestamp) {
         loadState = LoadMode.load;
         loadTask = widget.onLoad()
-          ..then((_) {
+          ?.then((_) {
             if (mounted && !widget.enableControlFinishLoad) {
               loadState = LoadMode.load;
               setState(() => loadTask = null);
