@@ -473,7 +473,7 @@ class EasyRefreshSliverLoadControl extends StatefulWidget {
   /// Can be null, in which case a single frame of [LoadMode.armed]
   /// state will be drawn before going immediately to the [LoadMode.done]
   /// where the sliver will start retracting.
-  OnLoadCallback onLoad;
+  final OnLoadCallback onLoad;
 
   /// 完成延时
   final Duration completeDuration;
@@ -624,18 +624,17 @@ class _EasyRefreshSliverLoadControlState
       }
       SchedulerBinding.instance.addPostFrameCallback((Duration timestamp) {
         loadState = LoadMode.load;
-        loadTask = widget.onLoad()
-          ?.then((_) {
-            if (mounted && !widget.enableControlFinishLoad) {
-              loadState = LoadMode.load;
-              setState(() => loadTask = null);
-              // Trigger one more transition because by this time, BoxConstraint's
-              // maxHeight might already be resting at 0 in which case no
-              // calls to [transitionNextState] will occur anymore and the
-              // state may be stuck in a non-inactive state.
-              loadState = transitionNextState();
-            }
-          });
+        loadTask = widget.onLoad()?.then((_) {
+          if (mounted && !widget.enableControlFinishLoad) {
+            loadState = LoadMode.load;
+            setState(() => loadTask = null);
+            // Trigger one more transition because by this time, BoxConstraint's
+            // maxHeight might already be resting at 0 in which case no
+            // calls to [transitionNextState] will occur anymore and the
+            // state may be stuck in a non-inactive state.
+            loadState = transitionNextState();
+          }
+        });
         setState(() => hasSliverLayoutExtent = true);
       });
     }

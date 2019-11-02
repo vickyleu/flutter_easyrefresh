@@ -648,18 +648,17 @@ class _EasyRefreshSliverRefreshControlState
       }
       SchedulerBinding.instance.addPostFrameCallback((Duration timestamp) {
         refreshState = RefreshMode.refresh;
-        refreshTask = widget.onRefresh()
-          ?.then((_) {
-            if (mounted && !widget.enableControlFinishRefresh) {
-              refreshState = RefreshMode.refresh;
-              setState(() => refreshTask = null);
-              // Trigger one more transition because by this time, BoxConstraint's
-              // maxHeight might already be resting at 0 in which case no
-              // calls to [transitionNextState] will occur anymore and the
-              // state may be stuck in a non-inactive state.
-              refreshState = transitionNextState();
-            }
-          });
+        refreshTask = widget.onRefresh()?.then((_) {
+          if (mounted && !widget.enableControlFinishRefresh) {
+            refreshState = RefreshMode.refresh;
+            setState(() => refreshTask = null);
+            // Trigger one more transition because by this time, BoxConstraint's
+            // maxHeight might already be resting at 0 in which case no
+            // calls to [transitionNextState] will occur anymore and the
+            // state may be stuck in a non-inactive state.
+            refreshState = transitionNextState();
+          }
+        });
         setState(() => hasSliverLayoutExtent = true);
       });
     }
