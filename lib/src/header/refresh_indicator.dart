@@ -538,9 +538,9 @@ class EasyRefreshSliverRefreshControl extends StatefulWidget {
   /// state that gets passed into the [builder] function. Used for testing.
   @visibleForTesting
   static RefreshMode state(BuildContext context) {
-    final _EasyRefreshSliverRefreshControlState state =
-        context.ancestorStateOfType(
-            const TypeMatcher<_EasyRefreshSliverRefreshControlState>());
+    final _EasyRefreshSliverRefreshControlState state =context.findAncestorStateOfType<_EasyRefreshSliverRefreshControlState>();
+        // context.ancestorStateOfType(
+        //     const TypeMatcher<_EasyRefreshSliverRefreshControlState>());
     return state.refreshState;
   }
 
